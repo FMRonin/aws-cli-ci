@@ -1,7 +1,7 @@
 FROM debian:buster-slim
 
 RUN apt-get update -qq && \
-    apt-get install -qqy coreutils python py-pip python-dev jq apt-transport-https ca-certificates curl gnupg2 software-properties-common && \
+    apt-get install -qqy coreutils python pip python-dev jq apt-transport-https ca-certificates curl gnupg2 software-properties-common && \
     pip install awscli && \
     rm -rf /var/cache/apk/*    
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
