@@ -1,0 +1,22 @@
+name: Document Recording Webapp
+
+on:
+  push:
+    branches: [ development ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+    name: CD
+    steps:
+      - name: 'Build and push image'
+        uses: azure/docker-login@v1
+        with:
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+          - run: |
+              docker build . -t ${{ secrets.username }}/aws-cli-ci:latest
+              docker push ${{ secrets.username }}/aws-cli-ci:latest
+
