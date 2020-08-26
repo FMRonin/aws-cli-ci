@@ -5,10 +5,10 @@ FROM alpine:3
 #========================================
 ENV SAM_VERSION=1.1.0
 RUN apk add --no-cache curl && \
-    curl -sSLO https://github.com/awslabs/aws-sam-local/releases/download/v${SAM_VERSION}/sam_${SAM_VERSION}_linux_386.tar.gz && \
-    tar -C /usr/local/bin -zxvf /sam_${SAM_VERSION}_linux_386.tar.gz && \
+    curl -sSLO https://github.com/aws/aws-sam-cli/releases/download/v${SAM_VERSION}/aws-sam-cli-${SAM_VERSION}.x86_64_linux.bottle.tar.gz && \
+    tar -C /usr/local/bin -zxvf /aws-sam-cli-${SAM_VERSION}.x86_64_linux.bottle.tar.gz && \
     apk del curl && \
-    rm -f /sam_${SAM_VERSION}_linux_386.tar.gz
+    rm -f /sam_${SAM_VERSION}.x86_64_linux.bottle.tar.gz
 
 #========================================
 # AWS CLI
