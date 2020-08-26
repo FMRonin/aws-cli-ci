@@ -15,5 +15,5 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
-          docker build -t ${{ secrets.username }}/aws-cli-ci:latest .
-          docker push ${{ secrets.username }}/aws-cli-ci:latest
+          docker build -t ${{ secrets.REGISTRY_USERNAME }}/aws-cli-ci:latest .
+          docker push ${{ secrets.REGISTRY_USERNAME }}/aws-cli-ci:latest
