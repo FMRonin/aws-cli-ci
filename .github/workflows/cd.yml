@@ -9,12 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     name: CD
     steps:
-      - name: 'Build and push image'
-        uses: azure/docker-login@v1
+      - name: Checkout code
+            uses: actions/checkout@v2
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v1
         with:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-      - run: |
-          ls -l
-          docker build -t ${{ secrets.REGISTRY_USERNAME }}/aws-cli-ci:latest .
-          docker push ${{ secrets.REGISTRY_USERNAME }}/aws-cli-ci:latest
+          repository: JuanDavidGutierrezC/aws-cli-ci
+          tag_with_ref: true
+          tag_with_sha: true
