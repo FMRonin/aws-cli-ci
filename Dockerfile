@@ -1,18 +1,12 @@
-FROM python:3.8.0b4-slim-buster
+FROM alpine:3.6
 
-RUN apt-get update -qq && \
-    apt-get install -qqy python3-pip jq apt-transport-https ca-certificates curl gnupg2 software-properties-common && \
-    pip3 install awscli && \
-    rm -rf /var/cache/apk/*    
-RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
-RUN add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/debian \
-   $(lsb_release -cs) \
-   stable"    
-RUN add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/debian \
-   $(lsb_release -cs) \
-   stable"  
-RUN apt-get update  -qq \
-    && apt-get install docker-ce=17.12.1~ce-0~debian -y      
-     
+ENV VERSION=0.2.2
+
+RUN apk add --no-cache curl && \
+    curl -sSLO https://github.com/awslabs/aws-sam-local/releases/download/v${VERSION}/sam_${VERSION}_linux_386.tar.gz && \
+    tar -C /usr/local/bin -zxvf /sam_${VERSION}_linux_386.tar.gz && \
+    apk del curl && \
+    rm -f /sam_${VERSION}_linux_386.tar.gz
+
+# awscli for "sam package" and "sam deploy"
+RUN apk add --no-cache py-pip && pip install awscli
