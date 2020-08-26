@@ -11,10 +11,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v1
+      - name: 'Build and push image'
+        uses: azure/docker-login@v1
         with:
-          username: JuanDavidGutierrezC
+          username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-          repository: JuanDavidGutierrezC/aws-cli-ci
-          tags: latest
+      - run: |
+          docker build -t ${{ secrets.REGISTRY_USERNAME }}/aws-cli-ci:latest .
+          docker push ${{ secrets.REGISTRY_USERNAME }}/aws-cli-ci:latest
