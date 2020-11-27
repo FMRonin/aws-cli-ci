@@ -1,16 +1,17 @@
-FROM alpine:3
+FROM python:3.8.0b4-slim-buster
 
-#========================================
-# SAM
-#========================================
-ENV SAM_VERSION=1.1.0
-RUN apk add --no-cache curl && \
-    curl -sSLO https://github.com/aws/aws-sam-cli/releases/download/v${SAM_VERSION}/aws-sam-cli-${SAM_VERSION}.x86_64_linux.bottle.tar.gz && \
-    tar -C /usr/local/bin -zxvf /aws-sam-cli-${SAM_VERSION}.x86_64_linux.bottle.tar.gz && \
-    apk del curl && \
-    rm -f /sam_${SAM_VERSION}.x86_64_linux.bottle.tar.gz
-
-#========================================
-# AWS CLI
-#========================================
-RUN apk add --no-cache py-pip && pip install awscli
+RUN apt-get update -qq && \
+    apt-get install -qqy python3-pip jq apt-transport-https ca-certificates curl gnupg2 software-properties-common unzip && \
+    pip3 install awscli && \
+    rm -rf /var/cache/apk/*    
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"    
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"  
+RUN apt-get update  -qq \
+    && apt-get install docker-ce=17.12.1~ce-0~debian -y
